@@ -105,4 +105,4 @@ deck-builder/
 
 ## License
 
-MIT
+MIT + [Commons Clause](https://commonsclause.com/). Free to use, modify, and share. You own everything you create with it -- sell your decks, use them commercially, no restrictions on output. You just can't repackage and sell the skill itself. See [LICENSE](LICENSE) for details.
