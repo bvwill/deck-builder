@@ -12,6 +12,7 @@ Describe the moment -- who's in the room, what the format is, what it should fee
 - **9 interactive capabilities** -- timers, click-to-copy, word-by-word reveals, video embeds, expandable Bento tiles, persistent brand bar, progress rail, password gate, keyboard navigation
 - **7 domain types** -- sales pitch, virtual workshop, lightning lesson, in-person workshop, all-hands, board review, keynote
 
+[Loom Demo Video](https://www.loom.com/share/dbf241ef8f3d4a3aa018d8d7148e43a4)
 ## Install
 
 ```bash
