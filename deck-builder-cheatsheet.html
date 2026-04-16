@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Deck Builder Skill -- Cheat Sheet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;600;700;800;900&family=Inter:wght@400;500;600&family=Caveat:wght@400;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; overflow: hidden; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: #07080c;
+  color: #e8e6e1;
+}
+
+:root {
+  --bg: #07080c;
+  --surface: #111318;
+  --surface-hover: #1a1d24;
+  --border: rgba(255,255,255,0.06);
+  --ink: #e8e6e1;
+  --ink-soft: rgba(255,255,255,0.5);
+  --ink-dim: rgba(255,255,255,0.3);
+  --teal: #3bbfa0;
+  --teal-dim: rgba(59,191,160,0.12);
+  --amber: #e8a35c;
+  --amber-dim: rgba(232,163,92,0.12);
+  --purple: #8b7ec8;
+  --purple-dim: rgba(139,126,200,0.1);
+  --blue: #5b8def;
+  --red: #e85c5c;
+  --display: 'Inter Tight', 'Inter', system-ui, sans-serif;
+  --sans: 'Inter', system-ui, sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+  --hand: 'Caveat', cursive;
+}
+
+.page {
+  width: 100vw; height: 100vh;
+  display: grid;
+  grid-template-columns: 300px 1fr 1fr 1fr;
+  grid-template-rows: auto 1fr 1fr 1fr auto;
+  gap: 10px;
+  padding: 12px;
+}
+
+/* ── HEADER ── */
+.header {
+  grid-column: 1 / -1;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.4rem 0.5rem;
+}
+.header .title-group { display: flex; align-items: baseline; gap: 0.75rem; }
+.header h1 {
+  font-family: var(--display); font-weight: 900; font-size: 1.15rem;
+  letter-spacing: -0.02em; color: var(--ink);
+}
+.header .badge {
+  font-family: var(--mono); font-size: 0.55rem; font-weight: 500;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  background: var(--teal-dim); color: var(--teal);
+  padding: 0.2rem 0.6rem; border-radius: 3px;
+}
+.header .tagline {
+  font-family: var(--sans); font-size: 0.7rem; color: var(--ink-soft);
+}
+
+/* ── CARDS ── */
+.card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 0.85rem 0.9rem;
+  transition: all 0.3s; position: relative; overflow: hidden;
+}
+.card:hover {
+  background: var(--surface-hover);
+  border-color: rgba(255,255,255,0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+.card-label {
+  font-family: var(--display); font-weight: 700; font-size: 0.5rem;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+.card h3 {
+  font-family: var(--display); font-weight: 800; font-size: 0.85rem;
+  line-height: 1.2; color: var(--ink); margin-bottom: 0.35rem;
+}
+.card p, .card li {
+  font-size: 0.68rem; color: var(--ink-soft); line-height: 1.45;
+}
+.card ul { list-style: none; display: flex; flex-direction: column; gap: 0.2rem; }
+.card li::before {
+  content: ''; display: inline-block; width: 4px; height: 4px;
+  border-radius: 50%; margin-right: 0.4rem; vertical-align: middle;
+}
+
+/* ── COLOR ACCENTS PER SECTION ── */
+.teal .card-label { color: var(--teal); }
+.teal li::before { background: var(--teal); }
+.amber .card-label { color: var(--amber); }
+.amber li::before { background: var(--amber); }
+.purple .card-label { color: var(--purple); }
+.purple li::before { background: var(--purple); }
+.blue .card-label { color: var(--blue); }
+.blue li::before { background: var(--blue); }
+
+/* ── LEFT COLUMN: CORE THESIS ── */
+.thesis {
+  grid-row: 2 / 5;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.thesis-main {
+  flex: 1;
+  display: flex; flex-direction: column; justify-content: center;
+  background: linear-gradient(135deg, rgba(59,191,160,0.08), rgba(139,126,200,0.06));
+  border: 1px solid rgba(59,191,160,0.12);
+}
+.thesis-main h2 {
+  font-family: var(--display); font-weight: 900;
+  font-size: 1.3rem; line-height: 1.15;
+  color: var(--ink); margin-bottom: 0.6rem;
+}
+.thesis-main h2 .teal-word { color: var(--teal); }
+.thesis-main p {
+  font-size: 0.72rem; color: var(--ink-soft); line-height: 1.5; max-width: 30ch;
+}
+.mode-card { flex: 0 0 auto; }
+.mode-card .modes {
+  display: flex; flex-direction: column; gap: 0.3rem; margin-top: 0.3rem;
+}
+.mode-item {
+  display: flex; align-items: baseline; gap: 0.4rem;
+}
+.mode-num {
+  font-family: var(--display); font-weight: 900; font-size: 0.8rem; color: var(--teal);
+  min-width: 18px;
+}
+.mode-name {
+  font-family: var(--display); font-weight: 700; font-size: 0.68rem; color: var(--ink);
+}
+.mode-desc {
+  font-size: 0.6rem; color: var(--ink-dim); margin-left: 0.3rem;
+}
+
+/* ── WORKFLOW ROW ── */
+.workflow-steps {
+  display: flex; flex-direction: column; gap: 0.25rem; margin-top: 0.35rem;
+}
+.step {
+  display: flex; align-items: baseline; gap: 0.4rem;
+}
+.step-num {
+  font-family: var(--mono); font-size: 0.55rem; color: var(--amber);
+  min-width: 14px; opacity: 0.7;
+}
+.step-text {
+  font-size: 0.63rem; color: var(--ink-soft); line-height: 1.35;
+}
+.step-text strong { color: var(--ink); font-weight: 600; }
+
+/* ── STYLES GRID ── */
+.styles-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0.3rem;
+  margin-top: 0.35rem;
+}
+.style-chip {
+  display: flex; align-items: center; gap: 0.35rem;
+  padding: 0.25rem 0.4rem; border-radius: 4px;
+  background: rgba(255,255,255,0.03);
+  transition: background 0.2s;
+}
+.style-chip:hover { background: rgba(255,255,255,0.06); }
+.style-dot {
+  width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0;
+}
+.style-name {
+  font-family: var(--display); font-weight: 600; font-size: 0.58rem; color: var(--ink);
+}
+
+/* ── CAPABILITIES ── */
+.cap-grid {
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.25rem;
+  margin-top: 0.35rem;
+}
+.cap-item {
+  padding: 0.3rem 0.4rem; border-radius: 4px;
+  border: 1px solid var(--border);
+  transition: all 0.2s;
+}
+.cap-item:hover {
+  border-color: rgba(139,126,200,0.3);
+  background: rgba(139,126,200,0.04);
+}
+.cap-name {
+  font-family: var(--display); font-weight: 700; font-size: 0.55rem;
+  color: var(--ink); margin-bottom: 0.1rem;
+}
+.cap-desc { font-size: 0.5rem; color: var(--ink-dim); line-height: 1.3; }
+
+/* ── DOMAIN TYPES ── */
+.domain-list {
+  display: flex; flex-direction: column; gap: 0.2rem; margin-top: 0.35rem;
+}
+.domain-item {
+  display: flex; align-items: baseline; gap: 0.35rem;
+}
+.domain-tag {
+  font-family: var(--mono); font-size: 0.5rem; font-weight: 500;
+  color: var(--blue); background: rgba(91,141,239,0.08);
+  padding: 0.1rem 0.35rem; border-radius: 3px;
+  white-space: nowrap; min-width: 72px; text-align: center;
+}
+.domain-hint {
+  font-size: 0.58rem; color: var(--ink-dim); line-height: 1.3;
+}
+
+/* ── HANDWRITTEN NOTE ── */
+.hand-note {
+  font-family: var(--hand); font-size: 1.1rem; color: var(--teal);
+  transform: rotate(-1.5deg); opacity: 0.7; line-height: 1.2;
+  margin-top: 0.4rem;
+}
+
+/* ── FOOTER ── */
+.footer {
+  grid-column: 1 / -1;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.25rem 0.5rem;
+  border-top: 1px solid var(--border);
+}
+.footer-left {
+  font-family: var(--mono); font-size: 0.55rem; color: var(--ink-dim);
+  letter-spacing: 0.06em;
+}
+.footer-right {
+  display: flex; gap: 1.25rem;
+}
+.footer-item {
+  font-family: var(--sans); font-size: 0.55rem; color: var(--ink-dim);
+}
+.footer-item strong { color: var(--ink-soft); font-weight: 600; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .page {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    overflow-y: auto;
+    height: auto;
+  }
+  .thesis { grid-row: auto; }
+}
+
+/* ── PRINT ── */
+@media print {
+  body { background: #fff; color: #111; }
+  .card { border-color: #ddd; background: #f9f9f9; }
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="title-group">
+      <h1>Deck Builder</h1>
+      <span class="badge">Claude Code Skill</span>
+    </div>
+    <span class="tagline">One HTML file. Any brand. Every moment.</span>
+  </div>
+
+  <!-- LEFT COLUMN -->
+  <div class="thesis">
+    <div class="card thesis-main">
+      <h2>Every presentation is a <span class="teal-word">moment</span> with an audience, a format, and a feeling.</h2>
+      <p>Get those three right and the design follows. Describe the moment -- the skill builds the deck.</p>
+      <div class="hand-note">You describe. It builds.</div>
+    </div>
+    <div class="card mode-card teal">
+      <div class="card-label">Three Modes</div>
+      <div class="modes">
+        <div class="mode-item">
+          <span class="mode-num">1</span>
+          <span class="mode-name">One-Shot</span>
+          <span class="mode-desc">Content in, deck out</span>
+        </div>
+        <div class="mode-item">
+          <span class="mode-num">2</span>
+          <span class="mode-name">Collaborative</span>
+          <span class="mode-desc">Propose, react, build</span>
+        </div>
+        <div class="mode-item">
+          <span class="mode-num">3</span>
+          <span class="mode-name">Show Me Options</span>
+          <span class="mode-desc">Visual style sampler</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROW 1: WORKFLOW -->
+  <div class="card amber" style="grid-column: 2 / 5;">
+    <div class="card-label">The Workflow</div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem 1.5rem;">
+      <div class="workflow-steps">
+        <div class="step"><span class="step-num">01</span><span class="step-text"><strong>Research</strong> the actual content -- read the source, don't just format what's pasted</span></div>
+        <div class="step"><span class="step-num">02</span><span class="step-text"><strong>Capture the moment</strong> -- audience, format, feeling</span></div>
+        <div class="step"><span class="step-num">03</span><span class="step-text"><strong>Choose a style</strong> -- named catalog, URL, images/folder, or describe it</span></div>
+        <div class="step"><span class="step-num">04</span><span class="step-text"><strong>Structure</strong> into a narrative arc with domain awareness</span></div>
+      </div>
+      <div class="workflow-steps">
+        <div class="step"><span class="step-num">05</span><span class="step-text"><strong>Build</strong> from the starter template -- one HTML file, zero dependencies</span></div>
+        <div class="step"><span class="step-num">06</span><span class="step-text"><strong>Open and iterate</strong> -- edit in place, don't regenerate</span></div>
+        <div class="step"><span class="step-num">07</span><span class="step-text"><strong>Deploy</strong> to GitHub Pages with optional password gate</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROW 2: STYLES + CAPABILITIES -->
+  <div class="card purple">
+    <div class="card-label">6 Named Styles</div>
+    <div class="styles-grid">
+      <div class="style-chip"><div class="style-dot" style="background: #b8552a;"></div><span class="style-name">Editorial Warmth</span></div>
+      <div class="style-chip"><div class="style-dot" style="background: #2b7a6c;"></div><span class="style-name">Cohort Dark</span></div>
+      <div class="style-chip"><div class="style-dot" style="background: #e63946;"></div><span class="style-name">Swiss Rigor</span></div>
+      <div class="style-chip"><div class="style-dot" style="background: #ff4500;"></div><span class="style-name">Terminal Brutalism</span></div>
+      <div class="style-chip"><div class="style-dot" style="background: #e8a35c;"></div><span class="style-name">Magazine Feature</span></div>
+      <div class="style-chip"><div class="style-dot" style="background: #9b8fef;"></div><span class="style-name">Bento Modern</span></div>
+    </div>
+    <p style="font-size: 0.58rem; color: var(--ink-dim); margin-top: 0.4rem;">Or: match a URL, image folder, or description. The skill derives the full design system.</p>
+  </div>
+
+  <div class="card purple" style="grid-column: 3 / 5;">
+    <div class="card-label">9 Interactive Capabilities</div>
+    <div class="cap-grid">
+      <div class="cap-item"><div class="cap-name">Timers</div><div class="cap-desc">Countdown with audio beep</div></div>
+      <div class="cap-item"><div class="cap-name">Click-to-Copy</div><div class="cap-desc">Links, prompts, code blocks</div></div>
+      <div class="cap-item"><div class="cap-name">Word Reveal</div><div class="cap-desc">Staggered word-by-word animation</div></div>
+      <div class="cap-item"><div class="cap-name">Video Embed</div><div class="cap-desc">Loom, YouTube, Vimeo inline</div></div>
+      <div class="cap-item"><div class="cap-name">Bento Tiles</div><div class="cap-desc">Expandable FLIP-animated grid</div></div>
+      <div class="cap-item"><div class="cap-name">Brand Bar</div><div class="cap-desc">Persistent top bar on every slide</div></div>
+      <div class="cap-item"><div class="cap-name">Progress Rail</div><div class="cap-desc">Dots + section name + counter</div></div>
+      <div class="cap-item"><div class="cap-name">Password Gate</div><div class="cap-desc">SHA-256 hashed, branded overlay</div></div>
+      <div class="cap-item"><div class="cap-name">Keyboard Nav</div><div class="cap-desc">Arrows, space, T for timer</div></div>
+    </div>
+  </div>
+
+  <!-- ROW 3: DOMAIN TYPES + PEDAGOGY + PRINCIPLES -->
+  <div class="card blue">
+    <div class="card-label">Domain Archetypes</div>
+    <div class="domain-list">
+      <div class="domain-item"><span class="domain-tag">Sales</span><span class="domain-hint">Scannable, explorable, bento tiles</span></div>
+      <div class="domain-item"><span class="domain-tag">Workshop</span><span class="domain-hint">In-person or virtual, timers + exercises</span></div>
+      <div class="domain-item"><span class="domain-tag">Lightning</span><span class="domain-hint">25-35 min virtual, compressed arc</span></div>
+      <div class="domain-item"><span class="domain-tag">All-Hands</span><span class="domain-hint">Headline first, under 15 slides</span></div>
+      <div class="domain-item"><span class="domain-tag">Board</span><span class="domain-hint">Numbers first. Swiss Rigor.</span></div>
+      <div class="domain-item"><span class="domain-tag">Keynote</span><span class="domain-hint">Pacing over density, reveals</span></div>
+      <div class="domain-item"><span class="domain-tag">Kickoff</span><span class="domain-hint">Bento energy, hero metric</span></div>
+    </div>
+  </div>
+
+  <div class="card teal">
+    <div class="card-label">Workshop Pedagogy</div>
+    <ul>
+      <li>Earn the tension before the solution</li>
+      <li>Vary visual layout every 3-4 slides</li>
+      <li>Audience does something every 5-7 min</li>
+      <li>One "screenshot this" cheat-sheet slide</li>
+      <li>Annotations are audience-facing, not notes</li>
+      <li>Exercise must produce a usable artifact</li>
+      <li>Virtual: chat first, breakouts of 2-3, auto-return</li>
+    </ul>
+  </div>
+
+  <div class="card amber">
+    <div class="card-label">Core Principles</div>
+    <ul>
+      <li>The deck is a tool, not a slideshow</li>
+      <li>Fewer slides, more interactivity</li>
+      <li>Match the moment, not the template</li>
+      <li>One file, zero build steps</li>
+      <li>Every slide must do something PPTX can't</li>
+      <li>Research the content, don't just format it</li>
+      <li>Contrast check before shipping (always)</li>
+    </ul>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <span class="footer-left">deck-builder v2 // claude code skill</span>
+    <div class="footer-right">
+      <span class="footer-item"><strong>7</strong> reference files</span>
+      <span class="footer-item"><strong>6</strong> styles</span>
+      <span class="footer-item"><strong>9</strong> capabilities</span>
+      <span class="footer-item"><strong>7</strong> domain types</span>
+      <span class="footer-item"><strong>1</strong> HTML file output</span>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>{{DECK_TITLE}}</title>
+<!-- Google Fonts — swap these per style -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter+Tight:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     RESET + BASE
+     ============================================================ */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; overflow: hidden; }
+  body { font-family: var(--sans, 'Inter', system-ui, sans-serif); }
+
+  /* ============================================================
+     DESIGN TOKENS — replace per style
+     ============================================================ */
+  :root {
+    --ink: #0f1f2e;
+    --ink-soft: #3a4a5a;
+    --paper: #faf7f2;
+    --paper-warm: #f2ece1;
+    --accent: #b8552a;
+    --accent-soft: #e8c9b5;
+    --rule: #d9cfc0;
+    --ok: #2f7d4f;
+
+    --serif: 'Fraunces', Georgia, serif;
+    --sans: 'Inter', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+    --display: 'Inter Tight', 'Inter', sans-serif;
+  }
+
+  /* ============================================================
+     TOP BRAND BAR — persistent
+     ============================================================ */
+  header.top-brand {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 20;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.55rem 1.25rem;
+    background: rgba(10, 10, 10, 0.85); backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    font-family: var(--sans); font-size: 0.72rem; color: rgba(255,255,255,0.85);
+  }
+  header.top-brand .mark { display: flex; align-items: baseline; gap: 0.6rem; }
+  header.top-brand .mark .name { font-family: var(--serif); font-weight: 600; font-size: 0.92rem; color: #faf7f2; }
+  header.top-brand .mark .sep { color: rgba(255,255,255,0.3); font-weight: 300; }
+  header.top-brand .mark .domain { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.04em; color: rgba(255,255,255,0.5); }
+  header.top-brand .right { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+
+  /* ============================================================
+     STAGE — slides live here
+     ============================================================ */
+  .stage { position: fixed; top: 38px; left: 0; right: 0; bottom: 0; }
+  .slide {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none; transition: opacity .35s ease;
+  }
+  .slide.active { opacity: 1; pointer-events: auto; z-index: 2; }
+  .slide .inner { width: 100%; height: 100%; display: flex; padding: 3rem 4rem; }
+
+  /* ============================================================
+     BOTTOM NAV RAIL
+     ============================================================ */
+  nav.rail {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 10;
+    display: flex; align-items: center; gap: 1rem; padding: 0.75rem 1.25rem;
+    background: rgba(0,0,0,0.85); color: rgba(255,255,255,0.9);
+    backdrop-filter: blur(8px); font-family: var(--sans); font-size: 0.78rem;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  nav.rail .tag { font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.7; }
+  nav.rail .progress { flex: 1; display: flex; gap: 3px; }
+  nav.rail .dot {
+    flex: 1; height: 3px; background: rgba(255,255,255,0.12);
+    border-radius: 2px; cursor: pointer; transition: background .2s;
+  }
+  nav.rail .dot.done { background: rgba(255,255,255,0.35); }
+  nav.rail .dot.current { background: #fff; }
+  nav.rail .counter { font-variant-numeric: tabular-nums; opacity: 0.7; }
+  nav.rail button {
+    font-family: inherit; font-size: 0.78rem; padding: 0.35rem 0.75rem;
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+    color: inherit; cursor: pointer; border-radius: 3px;
+  }
+  nav.rail button:hover { background: rgba(255,255,255,0.18); }
+
+  /* ============================================================
+     TIMER — for work-time slides
+     ============================================================ */
+  .timer {
+    font-family: var(--serif); font-variant-numeric: tabular-nums; font-weight: 600;
+    font-size: clamp(5rem, 14vw, 10rem); line-height: 1; letter-spacing: -0.04em;
+  }
+  .timer.running { color: var(--accent); }
+  .timer.done { color: var(--ok); }
+  .timer-controls { display: flex; gap: 0.5rem; justify-content: center; margin: 1rem 0; }
+  .timer-controls button {
+    font-family: var(--sans); font-weight: 600; font-size: 0.85rem; letter-spacing: 0.06em;
+    text-transform: uppercase; padding: 0.7rem 1.3rem; border: 1px solid var(--ink, #222);
+    background: transparent; cursor: pointer; border-radius: 2px;
+  }
+
+  /* ============================================================
+     COPY BLOCKS
+     ============================================================ */
+  [data-copy] { cursor: pointer; }
+
+  /* ============================================================
+     RESPONSIVE
+     ============================================================ */
+  @media (max-width: 720px) {
+    .slide .inner { padding: 1.5rem 1rem; }
+  }
+
+  /* ============================================================
+     SLIDE STYLES — add per-deck styles below this line
+     ============================================================ */
+
+</style>
+</head>
+<body>
+
+<!-- Top Brand Bar — customize name, domain, company, descriptor -->
+<header class="top-brand">
+  <div class="mark">
+    <span class="name">{{PRESENTER_NAME}}</span>
+    <span class="sep">·</span>
+    <span class="domain">{{DOMAIN}}</span>
+    <span class="sep">·</span>
+    <span class="domain">{{COMPANY}}</span>
+  </div>
+  <div class="right">{{DECK_DESCRIPTOR}}</div>
+</header>
+
+<!-- Stage — add slides here -->
+<div class="stage">
+
+  <!-- EXAMPLE SLIDE — delete this and add your own -->
+  <section class="slide active" data-section="Welcome">
+    <div class="inner" style="flex-direction: column; justify-content: center;">
+      <h1 style="font-family: var(--serif); font-size: clamp(3rem, 7vw, 5.5rem); font-weight: 600; line-height: 1; letter-spacing: -0.03em;">
+        {{DECK_TITLE}}
+      </h1>
+      <p style="margin-top: 1.5rem; font-size: 1.2rem; color: var(--ink-soft); max-width: 40ch;">
+        {{DECK_SUBTITLE}}
+      </p>
+    </div>
+  </section>
+
+  <!-- Add more <section class="slide" data-section="Section Name"> here -->
+
+</div>
+
+<!-- Bottom Nav Rail -->
+<nav class="rail">
+  <span class="tag">{{DECK_TAG}}</span>
+  <div class="progress" id="progress"></div>
+  <button id="prev">&larr;</button>
+  <button id="next">&rarr;</button>
+  <span class="counter"><span id="num">1</span>/<span id="tot">1</span></span>
+</nav>
+
+<script>
+(() => {
+  // ── Slide Navigation ──
+  const slides = [...document.querySelectorAll('.slide')];
+  const total = slides.length;
+  document.getElementById('tot').textContent = total;
+  const prog = document.getElementById('progress');
+  slides.forEach((_, i) => {
+    const d = document.createElement('span');
+    d.className = 'dot';
+    d.onclick = () => go(i);
+    prog.appendChild(d);
+  });
+
+  let idx = 0;
+  function go(i) {
+    idx = Math.max(0, Math.min(total - 1, i));
+    slides.forEach((s, j) => s.classList.toggle('active', j === idx));
+    document.getElementById('num').textContent = idx + 1;
+    [...prog.children].forEach((d, j) => {
+      d.classList.toggle('done', j < idx);
+      d.classList.toggle('current', j === idx);
+    });
+    stopAllTimers();
+  }
+
+  document.getElementById('prev').onclick = () => go(idx - 1);
+  document.getElementById('next').onclick = () => go(idx + 1);
+  document.addEventListener('keydown', (e) => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'IFRAME') return;
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); go(idx + 1); }
+    else if (e.key === 'ArrowLeft') go(idx - 1);
+    else if (e.key === 't' || e.key === 'T') toggleCurrentTimer();
+    else if (e.key === 'r' || e.key === 'R') resetCurrentTimer();
+  });
+
+  // ── Timer System ──
+  const timerState = new WeakMap();
+  function fmt(s) { s = Math.max(0, s|0); return (s/60|0) + ':' + String(s%60).padStart(2,'0'); }
+  function initTimer(el) {
+    if (timerState.has(el)) return timerState.get(el);
+    const initial = parseInt(el.dataset.timer, 10);
+    const state = { remaining: initial, interval: null, initial };
+    timerState.set(el, state);
+    el.textContent = fmt(initial);
+    return state;
+  }
+  function tick(el) {
+    const s = timerState.get(el);
+    s.remaining -= 1; el.textContent = fmt(s.remaining);
+    if (s.remaining <= 0) {
+      clearInterval(s.interval); s.interval = null;
+      el.classList.remove('running'); el.classList.add('done');
+      try { const ctx = new AudioContext(); const o = ctx.createOscillator(); const g = ctx.createGain();
+        o.connect(g); g.connect(ctx.destination); o.frequency.value = 660; g.gain.value = 0.08;
+        o.start(); setTimeout(() => { o.stop(); ctx.close(); }, 280); } catch(e) {}
+    }
+  }
+  function startTimer(el) { const s = initTimer(el); if (s.interval || s.remaining <= 0) return; el.classList.add('running'); el.classList.remove('done'); s.interval = setInterval(() => tick(el), 1000); }
+  function pauseTimer(el) { const s = timerState.get(el); if (!s) return; if (s.interval) { clearInterval(s.interval); s.interval = null; el.classList.remove('running'); } }
+  function resetTimer(el) { const s = initTimer(el); if (s.interval) clearInterval(s.interval); s.interval = null; s.remaining = s.initial; el.textContent = fmt(s.remaining); el.classList.remove('running', 'done'); }
+  function adjustTimer(el, delta) { const s = initTimer(el); s.remaining = Math.max(0, s.remaining + delta); s.initial = Math.max(0, s.initial + delta); el.textContent = fmt(s.remaining); if (s.remaining > 0) el.classList.remove('done'); }
+  function stopAllTimers() { document.querySelectorAll('.timer').forEach(el => { const s = timerState.get(el); if (s && s.interval) { clearInterval(s.interval); s.interval = null; el.classList.remove('running'); } }); }
+  function currentTimer() { return slides[idx].querySelector('.timer'); }
+  function toggleCurrentTimer() { const el = currentTimer(); if (!el) return; const s = timerState.get(el); if (s && s.interval) pauseTimer(el); else startTimer(el); }
+  function resetCurrentTimer() { const el = currentTimer(); if (el) resetTimer(el); }
+
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-timer-action]');
+    if (!btn) return;
+    const slide = btn.closest('.slide');
+    const el = slide.querySelector('.timer');
+    const action = btn.dataset.timerAction;
+    if (action === 'start') startTimer(el);
+    else if (action === 'pause') pauseTimer(el);
+    else if (action === 'reset') resetTimer(el);
+    else if (action === 'adjust') adjustTimer(el, parseInt(btn.dataset.delta, 10));
+  });
+  document.querySelectorAll('.timer').forEach(initTimer);
+
+  // ── Click-to-Copy ──
+  document.addEventListener('click', (e) => {
+    const row = e.target.closest('[data-copy]');
+    if (!row) return;
+    navigator.clipboard.writeText(row.dataset.copy).catch(() => {});
+    const btn = row.querySelector('.copy-btn');
+    if (btn) {
+      row.classList.add('copied');
+      const orig = btn.textContent;
+      btn.textContent = 'Copied';
+      setTimeout(() => { row.classList.remove('copied'); btn.textContent = orig; }, 1400);
+    }
+  });
+
+  go(0);
+})();
+</script>
+
+</body>
+</html>
